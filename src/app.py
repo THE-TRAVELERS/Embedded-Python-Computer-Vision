@@ -1,3 +1,4 @@
+app.py 
 import os
 os.environ["OMP_NUM_THREADS"] = "1"  # ✅ Limite l'utilisation CPU
 
@@ -8,7 +9,7 @@ import cv2
 import time
 import socket
 
-app = Flask(__name__)
+app = Flask(_name_)
 model = YOLO("yolov8n_ncnn_model")  # ✅ Modèle NCNN exporté
 
 # Liste des classes à afficher
@@ -78,7 +79,17 @@ def index():
 def video():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     ip_address = socket.gethostbyname(socket.gethostname())
     print(f"🚀 Accès au flux : http://{ip_address}:5000")
     app.run(host='0.0.0.0', port=5000)
+
+
+ncnn_import.py
+from ultralytics import YOLO
+
+# Load a YOLOv8n PyTorch model
+model = YOLO("yolov8n.pt")
+
+# Export the model to NCNN format
+model.export(format="ncnn", imgsz=320)
