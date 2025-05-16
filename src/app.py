@@ -1,6 +1,6 @@
 app.py 
 import os
-os.environ["OMP_NUM_THREADS"] = "1"  # ✅ Limite l'utilisation CPU
+os.environ["OMP_NUM_THREADS"] = "1"  # limite l'utilisation des parties inutiles du modele 
 
 from flask import Flask, Response
 from picamera2 import Picamera2
@@ -10,9 +10,9 @@ import time
 import socket
 
 app = Flask(_name_)
-model = YOLO("yolov8n_ncnn_model")  # ✅ Modèle NCNN exporté
+model = YOLO("yolov8n_ncnn_model")  # modèle yolo transféré en ncnn
 
-# Liste des classes à afficher
+# liste des classes intéressantes à afficher
 INTERESTED_CLASSES = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
     11, 12, 13, 14, 15, 16,
@@ -24,40 +24,41 @@ INTERESTED_CLASSES = {
     72, 73, 74, 75, 76
 }
 
-# Configure la Picamera
-picam2 = Picamera2()
-picam2.preview_configuration.main.size = (640, 640)  # ✅ Résolution fixe
-picam2.preview_configuration.main.format = "RGB888"
+# configuration de la picaméra 3
+picam2 = Picamera2() # meme module que pour une picaméra 2
+picam2.preview_configuration.main.size = (640, 640)  # résolution d'affichage fixe et d'une valeur relative pour optimiser à la fois les fps et la "lisibilité" du modèle
+picam2.preview_configuration.main.format = "RGB888" # format d'output
 picam2.preview_configuration.align()
 picam2.configure("preview")
 picam2.start()
 
 def gen_frames():
     while True:
-        frame = picam2.capture_array()
-        results = model(frame)
+        frame = picam2.capture_array() # capture d'une frame
+        results = model(frame) # application du modele
 
-        # Filtrage des classes d’intérêt
-        boxes = results[0].boxes
-        kept = [i for i, c in enumerate(boxes.cls.cpu().tolist()) if int(c) in INTERESTED_CLASSES]
+        # filtrage des classes d’intérêt
+        boxes = results[0].boxes # prise en compte des résultats en boxe
+        kept = [i for i, c in enumerate(boxes.cls.cpu().tolist()) if int(c) in INTERESTED_CLASSES] # filtrage sur les classes intéressantes pour l'affichage
         boxes = boxes[kept] if kept else boxes[:0]
-        results[0].boxes = boxes
+        results[0].boxes = boxes # réduction des résultats affiché
 
-        # Optimisation .plot() : plus léger (moins d’effets visuels)
+        # optimisation du plot
         results[0].names = {i: model.names[i] for i in INTERESTED_CLASSES if i in model.names}
         annotated_frame = results[0].plot(boxes=True, labels=True, conf=False, line_width=1)
 
-        # Calcul FPS
+        # calcul du nombre de FPS pour affichage
         inference_time = results[0].speed['inference']
         fps = 1000 / inference_time if inference_time > 0 else 0
         cv2.putText(annotated_frame, f'FPS: {fps:.1f}', (10, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
 
-        # Compression JPEG (qualité 60)
+        # compression JPEG en qualité réduite pour optimiser les fps
         ret, buffer = cv2.imencode('.jpg', annotated_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
-        time.sleep(0.005)  # ✅ pause pour fluidité
+        time.sleep(0.005)  # pause pour fluidité
         yield (b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
 
+# affichage HTML
 @app.route('/')
 def index():
     return '''
@@ -81,15 +82,5 @@ def video():
 
 if _name_ == '_main_':
     ip_address = socket.gethostbyname(socket.gethostname())
-    print(f"🚀 Accès au flux : http://{ip_address}:5000")
+    print(f"Accès au flux : http://{ip_address}:5000")
     app.run(host='0.0.0.0', port=5000)
-
-
-ncnn_import.py
-from ultralytics import YOLO
-
-# Load a YOLOv8n PyTorch model
-model = YOLO("yolov8n.pt")
-
-# Export the model to NCNN format
-model.export(format="ncnn", imgsz=320)
