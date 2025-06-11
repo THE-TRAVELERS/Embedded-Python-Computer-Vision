@@ -25,7 +25,7 @@ _Command to enter the venv_
 <pre lang="markdown"> source yolo_object/bin/activate </pre>
 
 To make sure that you can use pip in a non-obsolete version of python
-<pre lang="markdown"> sudo apt update
+<pre lang="markdown">sudo apt update
 sudo apt install python3-pip -y
 pip install -U pip </pre>
 
