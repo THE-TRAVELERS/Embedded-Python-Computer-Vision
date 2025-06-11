@@ -61,7 +61,21 @@ use this on a notebook and you will get the versions you want
 !wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n-v11.pt -O yolov8n-v11.pt
 !wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n-v12.pt -O yolov8n-v12.pt </pre>
 
+or with code such as 
+<pre lang="markdown">
+import requests
+
+url = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
+output_path = "yolov8n.pt"
+
+response = requests.get(url)
+with open(output_path, "wb") as f:
+    f.write(response.content)
+
+print("Téléchargement terminé.")
+</pre>
 
 
-this
+check the existance of your .pt with : 
+<pre lang="markdown"> !ls -lh yolov8n.pt </pre>
 
