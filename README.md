@@ -21,7 +21,7 @@ I advise you to work on the cmd of an IDE such as VS-code.
 On it you will now put the following commands
 
 To use without problems libraries such as ultralytics without taking out the restrains, you have to create a virtual python virtual environment : 
-<pre lang="markdown"> bash python3 -m venv --system-site-packages yolo_object </pre>
+<pre lang="markdown"> python3 -m venv --system-site-packages yolo_object </pre>
 
 You can enter into it by using the bin/activate of this venv at anytime. after making sure you are in the same file as this virtual env, because it is a folder that you installed.
 _Command to enter the venv_
