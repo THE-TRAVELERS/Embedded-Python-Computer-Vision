@@ -41,3 +41,4 @@ You will now install the ultralytics
 To understand how to get started in computer vision you can go and see the core-electronics tutorial
 https://core-electronics.com.au/guides/raspberry-pi/getting-started-with-yolo-object-and-animal-recognition-on-the-raspberry-pi/
 
+
