@@ -12,7 +12,10 @@ The objectives :
 ## Instructions
 Supposedly you have the computer_vision/requirements.txt file which gives the full set of instructions to implement a usable python venv on your rasp with ultralytics in it.
 Ultralytics is the library where you will find the YOLO library, opencv for live-reading of input of the picamera for example.
-However here are the instructions and their explanations
+<pre lang="markdown">pip install -r requirements.txt </pre>
+This install the to-get-started dependencies in a venv that you will use for computer vision/
+
+However here are each instructions in this file as well as their explanations.
 
 I advise you to work on the cmd of an IDE such as VS-code. 
 On it you will now put the following commands
@@ -34,4 +37,7 @@ You will now install the ultralytics
 <pre lang="markdown"> pip install ultralytics[export] </pre>
 
 ### Use of the code already implemented
+
+To understand how to get started in computer vision you can go and see the core-electronics tutorial
+https://core-electronics.com.au/guides/raspberry-pi/getting-started-with-yolo-object-and-animal-recognition-on-the-raspberry-pi/
 
