@@ -56,4 +56,12 @@ This works with any .pt of yolo model
 you simply need to change the argument in the app.py with "yolov8n_ncnn_model" so that it uses the folder with the weights, args of your ncnn model
 
 You can also install the yolov11 and yolov12 directly with git.
+use this on a notebook and you will get the versions you want
+<pre lang="markdown"> !wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt -O yolov8n.pt
+!wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n-v11.pt -O yolov8n-v11.pt
+!wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n-v12.pt -O yolov8n-v12.pt </pre>
+
+
+
+this
 
