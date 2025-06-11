@@ -41,4 +41,19 @@ You will now install the ultralytics
 To understand how to get started in computer vision you can go and see the core-electronics tutorial
 https://core-electronics.com.au/guides/raspberry-pi/getting-started-with-yolo-object-and-animal-recognition-on-the-raspberry-pi/
 
+You can test the app.py to see how the yolov8n model works, you will see a very small amount of fps.
+put "yolov8n.pt" in the argument of the model in the code, then do (in the folder of the code)
+<pre lang="markdown"> python app.py </pre>
+
+Then, you will see that even the yolov8n doesn't work well
+I advise you to keep using a spark server as I do to print the output, to avoid unneccesary complication with the output of the picamera and disfonctionalities with certain libraries.
+
+you will now export a ncnn model version of your yolov8n.pt that was installed during the execution of the python script.
+<pre lang="markdown"> python ncnn_export.py </pre>
+I have put the .pt of yolov8n as the argument and the resolution of 320 for the model, but you can change it with 640 for example.
+
+This works with any .pt of yolo model
+you simply need to change the argument in the app.py with "yolov8n_ncnn_model" so that it uses the folder with the weights, args of your ncnn model
+
+You can also install the yolov11 and yolov12 directly with git.
 
